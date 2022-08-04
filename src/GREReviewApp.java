@@ -31,7 +31,7 @@ public class GREReviewApp {
     private void initialize() {
         index = 0;
         error = false;
-        reviewAll = true;
+        reviewAll = false;
         reviewF = false;
         wordList = new ArrayList<>();
         defList = new ArrayList<>();
@@ -123,5 +123,21 @@ public class GREReviewApp {
 
     public void setReviewF(boolean flag) {
         reviewF = flag;
+    }
+
+    public boolean getReviewAll() {
+        return reviewAll;
+    }
+
+    public boolean getReviewF() {
+        return reviewF;
+    }
+
+    public int getListSize() {
+        if (reviewAll) {
+            return wordList.size();
+        } else {
+            return forgottenList.size();
+        }
     }
 }

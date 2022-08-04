@@ -7,22 +7,27 @@ public class MenuPanel extends JPanel {
 
     public static final String WELCOME = "Welcome to Using GRE Review App!";
     private GREReviewApp app;
+    private WordsPanel wordsPanel;
 
     private JLabel welcome;
     private JButton reviewAll;
+    private JButton reviewF;
 
-    public MenuPanel(GREReviewApp app) {
+    public MenuPanel(GREReviewApp app, WordsPanel wordsPanel) {
         this.app = app;
+        this.wordsPanel = wordsPanel;
         setPreferredSize(new Dimension(GREReviewApp.WIDTH, GREReviewApp.HEIGHT));
         setBackground(Color.LIGHT_GRAY);
         initialize();
-        add(welcome, BorderLayout.NORTH);
+        add(welcome, BoxLayout.X_AXIS);
         add(reviewAll);
+        add(reviewF);
     }
 
     private void initialize() {
         setWelcome();
         setReviewAll();
+        setReviewForgotten();
     }
 
     private void setWelcome() {
@@ -36,18 +41,34 @@ public class MenuPanel extends JPanel {
     private void setReviewAll() {
         reviewAll = new JButton("Review All Words");
         reviewAll.setFont(new Font("Arial", Font.PLAIN, 24));
-//        reviewAll.setSize(40, 40);
-        reviewAll.setPreferredSize(new Dimension(40, 40));
+        reviewAll.setPreferredSize(new Dimension(1000, 40));
         reviewAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 app.setReviewAll(true);
                 app.setReviewF(false);
+                setVisible(false);
+                wordsPanel.setVisible(true);
             }
         });
-        reviewAll.setLocation(100, 1100);
+        reviewAll.setLocation(100, 500);
         reviewAll.setVisible(true);
     }
 
+    private void setReviewForgotten() {
+        reviewF = new JButton("Review Forgotton Words List");
+        reviewF.setFont(new Font("Arial", Font.PLAIN, 24));
+        reviewF.setPreferredSize(new Dimension(1000, 40));
+        reviewF.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                app.setReviewAll(false);
+                app.setReviewF(true);
+//                setVisible(false);
+            }
+        });
+        reviewF.setLocation(100, 500);
+        reviewF.setVisible(true);
+    }
 
 }
