@@ -8,14 +8,16 @@ public class MenuPanel extends JPanel {
     public static final String WELCOME = "Welcome to Using GRE Review App!";
     private GREReviewApp app;
     private WordsPanel wordsPanel;
+    private ControlPanelA controlPanelA;
 
     private JLabel welcome;
     private JButton reviewAll;
     private JButton reviewF;
 
-    public MenuPanel(GREReviewApp app, WordsPanel wordsPanel) {
+    public MenuPanel(GREReviewApp app, WordsPanel wordsPanel, ControlPanelA controlPanelA) {
         this.app = app;
         this.wordsPanel = wordsPanel;
+        this.controlPanelA = controlPanelA;
         setPreferredSize(new Dimension(GREReviewApp.WIDTH, GREReviewApp.HEIGHT));
         setBackground(Color.LIGHT_GRAY);
         initialize();
@@ -49,6 +51,8 @@ public class MenuPanel extends JPanel {
                 app.setReviewF(false);
                 setVisible(false);
                 wordsPanel.setVisible(true);
+                controlPanelA.setVisible(true);
+
             }
         });
         reviewAll.setLocation(100, 500);

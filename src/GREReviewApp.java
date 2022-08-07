@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,13 +84,6 @@ public class GREReviewApp {
     }
 
 
-
-    public void draw(Graphics g) {
-        if (reviewAll) {
-
-        }
-    }
-
     public String displayWord() {
         if (reviewAll) {
             return wordList.get(index);
@@ -107,6 +100,63 @@ public class GREReviewApp {
             return forgottenDef.get(index);
         }
         return null;
+    }
+
+    public void addToForgottenWords(int i) {
+        int size = forgottenList.size();
+        boolean found = false;
+        for (int j = 0; j < size; j++) {
+            if (forgottenList.get(j).equals(wordList.get(i))) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            forgottenList.add(wordList.get(i));
+            forgottenDef.add(defList.get(i));
+        }
+
+    }
+
+    public void deleteFromForgottenList(int i) {
+        forgottenList.remove(i);
+        forgottenDef.remove(i);
+    }
+
+    public void saveForgottenWords() {
+        try {
+            Writer writer = new Writer(new File(FORGOTTEN_WORDS_FILE));
+            for (int i = 0; i < forgottenList.size(); i++) {
+                writer.write(forgottenList.get(i));
+                writer.write(forgottenDef.get(i));
+            }
+            writer.close();
+            System.out.println("You have save your forgotten words!");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void keyPressed(int keyCode) {
+        if (keyCode == KeyEvent.VK_LEFT) {
+            if (reviewAll || reviewF && index >= 1) {
+                index -= 1;
+            }
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            if (reviewAll && index < wordList.size() - 1) {
+                index += 1;
+            } else if (reviewF && index < forgottenList.size() - 1) {
+                index += 1;
+            }
+        } else if (keyCode == KeyEvent.VK_UP) {
+            if (reviewAll) {
+                addToForgottenWords(index);
+            }
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            if (reviewF) {
+                deleteFromForgottenList(index);
+            }
+        }
     }
 
     public void setIndex(int i) {
@@ -140,4 +190,6 @@ public class GREReviewApp {
             return forgottenList.size();
         }
     }
+
+
 }
